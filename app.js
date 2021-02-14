@@ -14,12 +14,11 @@ const KEY = "15674931-a9d714b6e9d654524df198e00&q";
 
 //search by enter key
 var searchButton = document.getElementById("search-btn");
-document
-  .getElementById("search")
+document.getElementById("search")
   .addEventListener("keypress", function (event) {
-    if (event.key == "Enter") searchButton.click();
+    if (event.key == "Enter")searchButton.click();
   });
-  
+
 // show images
 const showImages = (images) => {
   imagesArea.style.display = "block";

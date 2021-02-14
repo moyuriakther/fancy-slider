@@ -12,12 +12,13 @@ let sliders = [];
 // to create your own api key
 const KEY = "15674931-a9d714b6e9d654524df198e00&q";
 
-//search by enter key 
+//search by enter key
 var searchButton = document.getElementById("search-btn");
-document.getElementById("search").addEventListener("keypress", function(event) {
-    if (event.key == 'Enter')
-    searchButton.click();
-});
+document
+  .getElementById("search")
+  .addEventListener("keypress", function (event) {
+    if (event.key == "Enter") searchButton.click();
+  });
 
 // show images
 const showImages = (images) => {
@@ -31,10 +32,12 @@ const showImages = (images) => {
     div.className = "col-lg-3 col-md-4 col-xs-6 img-item mb-2";
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div);
-  });
-};
+  })
+  toggleSpinner();
+}
 
 const getImages = (query) => {
+  toggleSpinner();
   fetch(
     `https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`
   )
@@ -90,14 +93,6 @@ const createSlider = () => {
       sliderContainer.appendChild(item);
     });
   }
-  // sliders.forEach(slide => {
-  //   let item = document.createElement('div')
-  //   item.className = "slider-item";
-  //   item.innerHTML = `<img class="w-100"
-  //   src="${slide}"
-  //   alt="">`;
-  //   sliderContainer.appendChild(item)
-  // })
 
   changeSlide(0);
   timer = setInterval(function () {
@@ -141,3 +136,11 @@ searchBtn.addEventListener("click", function () {
 sliderBtn.addEventListener("click", function () {
   createSlider();
 });
+
+// toggle spinner 
+const toggleSpinner = () =>{
+  const spinner = document.getElementById('loading-spinner');
+  const images = document.getElementById('images');
+  spinner.classList.toggle('d-none');
+  images.classList.toggle('d-none');
+}

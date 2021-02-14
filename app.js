@@ -19,7 +19,7 @@ document
   .addEventListener("keypress", function (event) {
     if (event.key == "Enter") searchButton.click();
   });
-
+  
 // show images
 const showImages = (images) => {
   imagesArea.style.display = "block";
@@ -43,19 +43,19 @@ const getImages = (query) => {
   )
     .then((response) => response.json())
     .then((data) => showImages(data.hits))
-    .catch((err) => console.log(err));
+    // .catch((err) => console.log(err));
+    .catch(error => displayError('Something went wrong! Please try again later'))
 };
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add("added");
-
+  element.classList.toggle("added");
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert("Hey, Already added !");
+      sliders.pop(img);
   }
 };
 var timer;
@@ -81,7 +81,7 @@ const createSlider = () => {
   imagesArea.style.display = "none";
   const duration = document.getElementById("duration").value || 1000;
   if (duration < 0) {
-    //duration alart area
+    //duration alert area
     alert("duration cannot be negative");
   } else {
     sliders.forEach((slide) => {
@@ -112,19 +112,15 @@ const changeSlide = (index) => {
     slideIndex = items.length - 1;
     index = slideIndex;
   }
-
   if (index >= items.length) {
     index = 0;
     slideIndex = 0;
   }
-
   items.forEach((item) => {
     item.style.display = "none";
   });
-
   items[index].style.display = "block";
 };
-
 searchBtn.addEventListener("click", function () {
   document.querySelector(".main").style.display = "none";
   clearInterval(timer);
@@ -143,4 +139,10 @@ const toggleSpinner = () =>{
   const images = document.getElementById('images');
   spinner.classList.toggle('d-none');
   images.classList.toggle('d-none');
+}
+
+//error massage show
+const displayError = (error) =>{
+    const errorTag = document.getElementById('error-massage');
+    errorTag.innerText = error;
 }
